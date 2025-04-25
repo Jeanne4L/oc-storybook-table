@@ -2,21 +2,16 @@
 import { ChangeEvent } from "react"
 
 import SearchIcon from "../../components/SearchIcon"
-import { ThemeColors } from "../../stories/Table/types"
+import { useTableContext } from "../../context/TableContext"
 import { SearchBarContainer } from "./styles"
 
-type SearchBarProps = {
-  colors: ThemeColors
-  handleInputChange: (value: string) => void
-}
-
-const SearchBar = ({ colors, handleInputChange }: SearchBarProps) => {
-  const { accentColor: borderColor, headerBg: bgColor, textColor: iconColor } = colors
+const SearchBar = () => {
+  const { colors, handleInputChange } = useTableContext()
 
   return (
-    <SearchBarContainer borderColor={borderColor} bgColor={bgColor}>
+    <SearchBarContainer borderColor={colors.accentColor} bgColor={colors.headerBg}>
       <input type="text" onChange={(event: ChangeEvent<HTMLInputElement>) => handleInputChange(event.target.value)} />
-      <SearchIcon color={iconColor} />
+      <SearchIcon color={colors.textColor} />
     </SearchBarContainer>
   )
 }

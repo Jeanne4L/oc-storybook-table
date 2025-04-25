@@ -1,41 +1,29 @@
 import SortIcon from "../../../components/SortIcon"
-import { ColumnsData, EmployeesData } from "../../types"
-import { SortConfigType, ThemeColors } from "../types"
+import { useTableContext } from "../../../context/TableContext"
+import Table from ".."
 import { TableHeaderCell, TableHeaderRow } from "./styles"
 
-type TableHeadProps = {
-  sortConfig: SortConfigType
-  data: EmployeesData
-  columns: ColumnsData
-  colors: ThemeColors
-  allSelected: boolean
-  handleSort: (columnIndex: number, sortConfig: SortConfigType, data: EmployeesData) => void
-  handleSelectAll: () => void
-}
-
-const TableHead = ({ sortConfig, data, columns, colors, allSelected, handleSort, handleSelectAll }: TableHeadProps) => {
-  const { headerBg, textColor: iconColor} = colors
+const TableHead = () => {
+    const { colors, columns, data, sortConfig, handleSort } = useTableContext()
 
   const isAscSorting = sortConfig.direction === 'asc'
   const isDescSorting = sortConfig.direction === 'desc'
 
   return (
     <thead>
-      <TableHeaderRow headerBg={headerBg}>
-        <TableHeaderCell>
+      <TableHeaderRow headerBg={colors.headerBg}>
+        {/* <TableHeaderCell>
           <input 
             type="checkbox" 
             onChange={handleSelectAll} 
             checked={allSelected} 
           />
-        </TableHeaderCell>
+        </TableHeaderCell> */}
 
         {columns.map((column, index) => (
           <TableHeaderCell 
             key={column.id} 
-            // alignment={column.alignment ?? 'left'} 
             onClick={() => handleSort(index, sortConfig, data)}
-            // columnWidth={columnWidth}
           >
             <div>
               {column.name}
@@ -43,7 +31,7 @@ const TableHead = ({ sortConfig, data, columns, colors, allSelected, handleSort,
                 bottomActive={sortConfig.columnIndex === index && isDescSorting} 
                 topActive={sortConfig.columnIndex === index && isAscSorting} 
                 disabled={sortConfig.columnIndex !== index}
-                color={iconColor}
+                color={colors.textColor}
               />
             </div>
           </TableHeaderCell>
@@ -53,4 +41,4 @@ const TableHead = ({ sortConfig, data, columns, colors, allSelected, handleSort,
   )
 }
 
-export default TableHead
+export default Table.Head = TableHead

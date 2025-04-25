@@ -7,10 +7,12 @@ const meta: Meta<typeof Table> = {
   title: 'Example/Table',
   component: Table,
   argTypes: {
-    headerBg: { control: 'color' },
-    rowBg: { control: 'color' },
-    accentColor: { control: 'color' },
-    textColor: { control: 'color' }
+    colors: {
+      headerBg: { control: 'color' },
+      rowBg: { control: 'color' },
+      accentColor: { control: 'color' },
+      textColor: { control: 'color' }
+    }
   }
 }
  

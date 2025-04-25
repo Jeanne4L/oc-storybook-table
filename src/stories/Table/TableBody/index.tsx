@@ -1,23 +1,10 @@
-import { ColumnsData, EmployeesData } from "../../types"
-import { ThemeColors } from "../types"
+import { useTableContext } from "../../../context/TableContext"
+import Table from ".."
 import { MessageTd, TableBodyRow, TableBodyCell } from "./styles"
 
-type TableBodyProps = {
-  data: EmployeesData
-  columns: ColumnsData
-  indexes: {
-    firstIndex: number 
-    lastIndex: number
-  }
-  colors: ThemeColors
-  allSelected: boolean
-  selectedRows: string[]
-  handleSelectRow: (id: string) => void
-}
 
-const TableBody = ({ data, columns, indexes, colors, allSelected, selectedRows, handleSelectRow }: TableBodyProps) => {
-  const { rowBg } = colors
-  const { firstIndex, lastIndex } = indexes
+const TableBody = () => {
+  const { colors, columns, data, indexes } = useTableContext()
 
   return (
     <tbody>
@@ -27,21 +14,20 @@ const TableBody = ({ data, columns, indexes, colors, allSelected, selectedRows, 
         </tr>
       ) : (
         <>
-          {data.slice(firstIndex, lastIndex).map((row, index) => (
-            <TableBodyRow key={index} isEven={index % 2 === 0} rowBg={rowBg}>
-              <TableBodyCell alignment='left' >
-              <input 
-                type="checkbox" 
-                onChange={() => handleSelectRow(row.id)} 
-                checked={allSelected || selectedRows.includes(row.id)} 
-              />
-              </TableBodyCell>
+          {data.slice(indexes.firstIndex, indexes.lastIndex).map((row, index) => (
+            <TableBodyRow key={index} isEven={index % 2 === 0} rowBg={colors.rowBg}>
+              {/* <TableBodyCell alignment='left' >
+                <input 
+                  type="checkbox" 
+                  onChange={() => handleSelectRow(row.id)} 
+                  checked={allSelected || selectedRows.includes(row.id)} 
+                />
+              </TableBodyCell> */}
 
               {columns.map((column) => (
                   <TableBodyCell 
                     key={column.id} 
                     alignment={column.alignment ?? 'left'} 
-                    // columnWidth={columnWidth}
                   >
                     {row[column.id]}
                   </TableBodyCell>
@@ -54,4 +40,4 @@ const TableBody = ({ data, columns, indexes, colors, allSelected, selectedRows, 
   )
 }
 
-export default TableBody
+export default Table.Body = TableBody
