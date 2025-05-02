@@ -1,8 +1,14 @@
-import { useTableContext } from "../../context/TableContext"
+import { useTable } from "../../context/Table"
+import { useToolbar } from "../../context/Toolbar"
 import { EntriesSelectContainer } from "./styles"
 
 const RowsPerPageSelector = () => {
-  const { colors, entriesSelectOptions: options, handleSelectOption,  } = useTableContext()
+  const { colors, entriesSelectOptions: options, handleSelectOption,  } = useTable()
+  const { isInsideToolbar } = useToolbar()
+
+  if (!isInsideToolbar) {
+    throw new Error('Table.EntriesSelector must be inside Table.Toolbar')
+  }
 
   const sortedOptions = options.sort((a,b) => a - b)
 

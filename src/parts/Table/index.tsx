@@ -1,47 +1,47 @@
 import { ReactNode, useState } from "react"
 
-import { TableContext } from "../../context/TableContext"
+import { TableContext } from "../../context/Table"
+import RowsPerPageSelector from "../../components/RowsPerPageSelector"
+import SearchBar from "../../components/SearchBar"
 import { ColumnsData, EmployeesData, RowActions } from "../types"
 import { SortConfigType } from "./types"
 import Pagination from "./Pagination"
-import Head from "./TableHead"
-import Body from "./TableBody"
-import ToolBar from "./ToolBar"
-import Content, { TableContentProps } from "./TableContent"
+import TableContent from "./TableContent"
+import TableHead from "./TableContent/TableHead" 
+import TableBody from "./TableContent/TableBody"
+import Toolbar from "./Toolbar"
 import { MainContainer } from "./styles"
 
-type TableProps = {
+export type TableProps = {
   columns: ColumnsData
   data: EmployeesData
   entriesSelectOptions: number[]
   children: ReactNode
-  colors?: {
-    headerBg: string
-    rowBg: string
-    accentColor: string
-    textColor: string
-  }
+  headerBg?: string
+  rowBg?: string
+  accentColor?: string
+  textColor?: string
   rowActions?: RowActions
 }
 
 interface CompoundTableComponent extends React.FC<TableProps> {
-  Pagination: React.FC
-  Head: React.FC
-  Body: React.FC
-  ToolBar: React.FC
-  Content: React.FC<TableContentProps>
+  Pagination: typeof Pagination
+  Head: typeof TableHead
+  Body: typeof TableBody
+  EntriesSelector: typeof RowsPerPageSelector
+  SearchBar: typeof SearchBar
+  Toolbar: typeof Toolbar
+  Content: typeof TableContent
 }
 
 const Table: CompoundTableComponent = ({ 
   columns, 
   data, 
   entriesSelectOptions,
-  colors = {
-    textColor: '#000',
-    headerBg: 'rgba(118, 159, 175, 0.4)',
-    rowBg: 'rgba(118, 159, 175, 0.1)',
-    accentColor: '#769FAF',
-  },
+  textColor = '#000',
+  headerBg = 'rgba(118, 159, 175, 0.4)',
+  rowBg = 'rgba(118, 159, 175, 0.1)',
+  accentColor = '#769FAF',
   rowActions,
   children
 }) => {
@@ -118,7 +118,7 @@ const Table: CompoundTableComponent = ({
   const lastIndex = firstIndex + itemsPerPage
 
   const visibleRowsIndexes = { firstIndex, lastIndex }
-  const { textColor } = colors
+  const colors = { textColor, headerBg, rowBg, accentColor }
 
   const contextValue = {
     columns,
@@ -135,20 +135,12 @@ const Table: CompoundTableComponent = ({
     handleSort,
     sortConfig,
     indexes: visibleRowsIndexes,
+    isInsideTable: true
   }
   
   return (
     <TableContext.Provider value={contextValue}>
       <MainContainer textColor={textColor}>
-        {/* <Table.Toolbar />
-        
-        <Table.Content>
-          <Table.Head />
-          <Table.Body />
-        </Table.Content>
-        
-        <Table.Pagination />
-       */}
         {children}
       </MainContainer>
     </TableContext.Provider>
@@ -156,9 +148,11 @@ const Table: CompoundTableComponent = ({
 }
 
 Table.Pagination = Pagination
-Table.Head = Head
-Table.Body = Body
-Table.ToolBar = ToolBar
-Table.Content = Content
+Table.Head = TableHead
+Table.Body = TableBody
+Table.EntriesSelector = RowsPerPageSelector
+Table.SearchBar = SearchBar
+Table.Toolbar = Toolbar
+Table.Content = TableContent
 
 export default Table

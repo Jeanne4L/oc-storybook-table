@@ -1,26 +1,33 @@
 import { ChangeEvent, createContext, useContext } from "react"
 
-import { ColumnsData, EmployeesData, RowActions } from "../stories/types"
-import { SortConfigType, ThemeColors } from "../stories/Table/types"
+import { ColumnsData, EmployeesData, RowActions } from "../parts/types"
+import { SortConfigType, ThemeColors } from "../parts/Table/types"
 
-type TableContextType = {
+type Pagination = {
+  totalItems: number
+  itemsPerPage: number
+  currentPage: number
+  setCurrentPage: (currentPage: number) => void
+}
+
+type Toolbar = {
+  entriesSelectOptions: number[]
+  handleSelectOption: (event: ChangeEvent<HTMLSelectElement>) => void
+  handleInputChange: (value: string) => void
+}
+
+type TableContextType = Pagination & Toolbar & {
   columns: ColumnsData
   data: EmployeesData
   colors: ThemeColors
   rowActions?: RowActions
-  totalItems: number
-  itemsPerPage: number
-  currentPage: number
   sortConfig: SortConfigType
   indexes: {
     firstIndex: number 
     lastIndex: number
   }
-  entriesSelectOptions: number[]
-  setCurrentPage: (currentPage: number) => void
+  isInsideTable: boolean
   handleSort: (columnIndex: number, sortConfig: SortConfigType, data: EmployeesData) => void
-  handleSelectOption: (event: ChangeEvent<HTMLSelectElement>) => void
-  handleInputChange: (value: string) => void
 }
 
 export const TableContext = createContext<TableContextType>({
@@ -45,10 +52,11 @@ export const TableContext = createContext<TableContextType>({
     lastIndex: 0
   },
   entriesSelectOptions: [],
+  isInsideTable: false,
   setCurrentPage: () => {},
   handleSelectOption: () => {},
   handleInputChange: () => {},
   handleSort: () => {},
 })
 
-export const useTableContext = () => useContext(TableContext)
+export const useTable = () => useContext(TableContext)

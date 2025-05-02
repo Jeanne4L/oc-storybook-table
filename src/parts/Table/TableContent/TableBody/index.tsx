@@ -1,10 +1,14 @@
-import { useTableContext } from "../../../context/TableContext"
-import Table from ".."
+import { useContent } from "../../../../context/Content"
+import { useTable } from "../../../../context/Table"
 import { MessageTd, TableBodyRow, TableBodyCell } from "./styles"
 
-
 const TableBody = () => {
-  const { colors, columns, data, indexes } = useTableContext()
+  const { colors, columns, data, indexes } = useTable()
+  const { isInsideContent } = useContent()
+
+  if (!isInsideContent) {
+    throw new Error('Table.Body must be inside Table.Content')
+  }
 
   return (
     <tbody>
@@ -40,4 +44,4 @@ const TableBody = () => {
   )
 }
 
-export default Table.Body = TableBody
+export default TableBody

@@ -1,11 +1,14 @@
 import Chevron from "../../../components/Chevron"
-import { useTableContext } from "../../../context/TableContext"
-import Table from ".."
+import { useTable } from "../../../context/Table"
 import { getPaginationRange } from "./helpers/getPaginationRange"
 import { PageButton, PaginationContainer } from "./styles"
 
 const Pagination = () => {
-  const { colors, data, totalItems, itemsPerPage, currentPage, setCurrentPage } = useTableContext()
+  const { colors, data, totalItems, itemsPerPage, currentPage, isInsideTable, setCurrentPage } = useTable()
+
+  if(!isInsideTable) {
+    throw new Error('Table.Pagination must be inside Table')
+  }
   
   const hasSeveralPages = data.length / itemsPerPage > 1
 
@@ -49,4 +52,4 @@ const Pagination = () => {
   )
 }
 
-export default Table.Pagination = Pagination
+export default Pagination

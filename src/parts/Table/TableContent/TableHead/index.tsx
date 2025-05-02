@@ -1,10 +1,15 @@
-import SortIcon from "../../../components/SortIcon"
-import { useTableContext } from "../../../context/TableContext"
-import Table from ".."
-import { TableHeaderCell, TableHeaderRow } from "./styles"
+import SortIcon from "../../../../components/SortIcon"
+import { useContent } from "../../../../context/Content"
+import { useTable } from "../../../../context/Table"
+import { TableHeaderRow, TableHeaderCell } from "./styles"
 
 const TableHead = () => {
-    const { colors, columns, data, sortConfig, handleSort } = useTableContext()
+  const { colors, columns, data, sortConfig, handleSort } = useTable()
+  const { isInsideContent } = useContent()
+
+  if (!isInsideContent) {
+    throw new Error('Table.Head must be inside Table.Content')
+  }
 
   const isAscSorting = sortConfig.direction === 'asc'
   const isDescSorting = sortConfig.direction === 'desc'
@@ -41,4 +46,4 @@ const TableHead = () => {
   )
 }
 
-export default Table.Head = TableHead
+export default TableHead
