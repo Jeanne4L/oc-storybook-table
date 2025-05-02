@@ -1,5 +1,5 @@
-import Table from './stories/Table'
-import { ColumnsData, EmployeesData } from './stories/types'
+import Table from './parts/Table'
+import { ColumnsData, EmployeesData } from './parts/types'
 
 export const columns: ColumnsData = [
   {
@@ -201,16 +201,28 @@ export const headerBg = 'rgba(118, 159, 175, 0.4)'
 export const rowBg = 'rgba(118, 159, 175, 0.1)'
 
 const App = () => {
+  const tableArgs = {
+    columns,
+    data,
+    textColor,
+    headerBg,
+    rowBg,
+    accentColor,
+    entriesSelectOptions
+  }
+
   return (
-    <Table 
-      columns={columns} 
-      data={data} 
-      textColor={textColor} 
-      headerBg={headerBg} 
-      rowBg={rowBg} 
-      accentColor={accentColor}  
-      entriesSelectOptions={entriesSelectOptions} 
-    />
+    <Table {...tableArgs}>
+      <Table.Toolbar>
+        <Table.EntriesSelector />
+        <Table.SearchBar />
+      </Table.Toolbar>
+      <Table.Content>
+        <Table.Head />
+        <Table.Body />
+      </Table.Content>
+      <Table.Pagination />
+    </Table>
   )
 }
 

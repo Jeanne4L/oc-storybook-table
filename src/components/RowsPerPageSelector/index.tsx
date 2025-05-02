@@ -1,21 +1,19 @@
-import { ChangeEvent } from "react"
-
+import { useTable } from "../../context/Table"
+import { useToolbar } from "../../context/Toolbar"
 import { EntriesSelectContainer } from "./styles"
-import { ThemeColors } from "../../stories/Table/types"
 
-type RowsPerPageSelectorProps = {
-  options: number[]
-  colors: ThemeColors
-  handleSelectOption: (event: ChangeEvent<HTMLSelectElement>) => void
-}
+const RowsPerPageSelector = () => {
+  const { colors, entriesSelectOptions: options, handleSelectOption,  } = useTable()
+  const { isInsideToolbar } = useToolbar()
 
-const RowsPerPageSelector = ({ options, colors, handleSelectOption }: RowsPerPageSelectorProps) => {
-  const { accentColor: borderColor, headerBg: bgColor } = colors
+  if (!isInsideToolbar) {
+    throw new Error('Table.EntriesSelector must be inside Table.Toolbar')
+  }
 
   const sortedOptions = options.sort((a,b) => a - b)
 
   return (
-    <EntriesSelectContainer borderColor={borderColor} bgColor={bgColor}>
+    <EntriesSelectContainer borderColor={colors.accentColor} bgColor={colors.headerBg}>
       <span>Show</span>
       <select name="entries" id="entries" onChange={(event) => handleSelectOption(event)}>
         {sortedOptions.map((option) => (

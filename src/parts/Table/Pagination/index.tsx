@@ -1,18 +1,20 @@
-import Chevron from "../../components/Chevron"
-import { ThemeColors } from "../../stories/Table/types"
+import Chevron from "../../../components/Chevron"
+import { useTable } from "../../../context/Table"
 import { getPaginationRange } from "./helpers/getPaginationRange"
 import { PageButton, PaginationContainer } from "./styles"
 
-type PaginationProps = {
-  totalItems: number
-  itemsPerPage: number
-  currentPage: number
-  colors: ThemeColors
-  onPageChange: (currentPage: number) => void
-}
+const Pagination = () => {
+  const { colors, data, totalItems, itemsPerPage, currentPage, isInsideTable, setCurrentPage } = useTable()
 
-const Pagination = ({ totalItems, itemsPerPage, currentPage, colors, onPageChange }: PaginationProps) => {
-  const { accentColor, textColor } = colors
+  if(!isInsideTable) {
+    throw new Error('Table.Pagination must be inside Table')
+  }
+  
+  const hasSeveralPages = data.length / itemsPerPage > 1
+
+  if(!hasSeveralPages) {
+    return
+  }
   
   const totalPages = Math.ceil(totalItems / itemsPerPage)
   const pagesRange = getPaginationRange(totalPages, currentPage)
@@ -22,8 +24,8 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, colors, onPageChang
       <Chevron 
         direction="left" 
         disabled={currentPage === 1}
-        onClick={() => onPageChange(currentPage - 1)} 
-        color={textColor}
+        onClick={() => setCurrentPage(currentPage - 1)} 
+        color={colors.textColor}
       />
 
       {pagesRange.map((pageNumber, index) => (
@@ -33,9 +35,9 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, colors, onPageChang
         <PageButton 
           key={pageNumber} 
           currentPage={currentPage === pageNumber}
-          accentColor={accentColor}
-          textColor={textColor}
-          onClick={() => onPageChange(pageNumber)}
+          accentColor={colors.accentColor}
+          textColor={colors.textColor}
+          onClick={() => setCurrentPage(pageNumber)}
         >
           {pageNumber}
         </PageButton>
@@ -43,8 +45,8 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, colors, onPageChang
       <Chevron 
         direction="right"
         disabled={currentPage === totalPages}
-        onClick={() => onPageChange(currentPage + 1)} 
-        color={textColor}
+        onClick={() => setCurrentPage(currentPage + 1)} 
+        color={colors.textColor}
       />
     </PaginationContainer>
   )
