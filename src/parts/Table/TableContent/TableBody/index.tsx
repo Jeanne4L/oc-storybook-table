@@ -1,14 +1,24 @@
 import { useContent } from "../../../../context/Content"
 import { useTable } from "../../../../context/Table"
+import { Employee } from "../../../types"
 import { MessageTd, TableBodyRow, TableBodyCell } from "./styles"
 
 const TableBody = () => {
-  const { colors, columns, data, indexes } = useTable()
+  const { colors, columns, data, indexes, rowActions } = useTable()
   const { isInsideContent } = useContent()
 
   if (!isInsideContent) {
     throw new Error('Table.Body must be inside Table.Content')
   }
+
+  const renderActions = (placement: 'beginning' | 'end', row: Employee) =>
+    rowActions?.map((action, i) => (
+      action.placement === placement && (
+        <TableBodyCell key={`${placement}-${i}`} alignment={placement === 'beginning' ? 'left' : 'right'}>
+          {action.action(row)}
+        </TableBodyCell>
+      )
+    ))
 
   return (
     <tbody>
@@ -20,22 +30,18 @@ const TableBody = () => {
         <>
           {data.slice(indexes.firstIndex, indexes.lastIndex).map((row, index) => (
             <TableBodyRow key={index} isEven={index % 2 === 0} rowBg={colors.rowBg}>
-              {/* <TableBodyCell alignment='left' >
-                <input 
-                  type="checkbox" 
-                  onChange={() => handleSelectRow(row.id)} 
-                  checked={allSelected || selectedRows.includes(row.id)} 
-                />
-              </TableBodyCell> */}
+              {renderActions('beginning', row)}
 
               {columns.map((column) => (
-                  <TableBodyCell 
-                    key={column.id} 
-                    alignment={column.alignment ?? 'left'} 
-                  >
-                    {row[column.id]}
-                  </TableBodyCell>
-                ))}
+                <TableBodyCell 
+                  key={column.id} 
+                  alignment={column.alignment ?? 'left'} 
+                >
+                  {row[column.id]}
+                </TableBodyCell>
+              ))}
+
+              {renderActions('end', row)}
             </TableBodyRow>
           ))}
         </>

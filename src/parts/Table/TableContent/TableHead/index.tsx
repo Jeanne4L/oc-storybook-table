@@ -4,7 +4,7 @@ import { useTable } from "../../../../context/Table"
 import { TableHeaderRow, TableHeaderCell } from "./styles"
 
 const TableHead = () => {
-  const { colors, columns, data, sortConfig, handleSort } = useTable()
+  const { colors, columns, data, sortConfig, rowActions, handleSort } = useTable()
   const { isInsideContent } = useContent()
 
   if (!isInsideContent) {
@@ -14,16 +14,19 @@ const TableHead = () => {
   const isAscSorting = sortConfig.direction === 'asc'
   const isDescSorting = sortConfig.direction === 'desc'
 
+  const renderActions = (placement: 'beginning' | 'end') =>
+    rowActions?.map((action, i) => (
+      action.placement === placement && (
+        <TableHeaderCell key={`${placement}-${i}`}>
+          {action.scope === 'global' ? action.action() : null}
+        </TableHeaderCell>
+      )
+    ))
+
   return (
     <thead>
       <TableHeaderRow headerBg={colors.headerBg}>
-        {/* <TableHeaderCell>
-          <input 
-            type="checkbox" 
-            onChange={handleSelectAll} 
-            checked={allSelected} 
-          />
-        </TableHeaderCell> */}
+        {renderActions('beginning')}
 
         {columns.map((column, index) => (
           <TableHeaderCell 
@@ -41,6 +44,8 @@ const TableHead = () => {
             </div>
           </TableHeaderCell>
         ))}
+
+        {renderActions('end')}
       </TableHeaderRow>
     </thead>
   )

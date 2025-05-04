@@ -52,8 +52,6 @@ const Table: CompoundTableComponent = ({
     columnIndex: 0,
     direction: 'asc',
   })
-  // const [allSelected, setAllSelected] = useState<boolean>(false)
-  // const [selectedRows, setSelectedRows] = useState<string[]>([])
 
   const handleSelectOption = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setItemsPerPage(Number(event.target.value))
@@ -76,14 +74,6 @@ const Table: CompoundTableComponent = ({
       direction: isSameColumn && sortConfig.direction === 'asc' ? 'desc' : 'asc'
     }
 
-    // const sortedData = [...data].sort((a,b) => {
-    //   if(newSortConfig.direction === 'asc') {
-    //     return Object.values(a)[columnIndex].localeCompare(Object.values(b)[columnIndex])
-    //   } else {
-    //     return Object.values(b)[columnIndex].localeCompare(Object.values(a)[columnIndex])
-    //   }
-    // })
-
     const sortedData = [...data].sort((a, b) => {
       const aValue = String(Object.values(a)[columnIndex])
       const bValue = String(Object.values(b)[columnIndex])
@@ -95,24 +85,6 @@ const Table: CompoundTableComponent = ({
     setSortConfig(newSortConfig)
     setFilteredData(sortedData)
   }
-
-  // const handleSelectAll = () => {
-  //   setAllSelected(!allSelected)
-  //   setSelectedRows([])
-  // }
-
-  // const handleSelectRow = (id: string, selectedRows: string[]) => {
-  //   if(selectedRows.includes(id)) {
-  //     setSelectedRows((prev) => ([
-  //       ...prev.filter((i) => i === id)
-  //     ]))
-  //   } else {
-  //     setSelectedRows((prev) => ([
-  //       ...prev,
-  //       id
-  //     ]))
-  //   }
-  // }
   
   const firstIndex = (currentPage - 1) * itemsPerPage
   const lastIndex = firstIndex + itemsPerPage
