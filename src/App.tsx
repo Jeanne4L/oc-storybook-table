@@ -1,5 +1,5 @@
 import Table from './parts/Table'
-import { ColumnsData, EmployeesData } from './parts/types'
+import { ColumnsData, EmployeesData, RowActions } from './parts/types'
 
 export const columns: ColumnsData = [
   {
@@ -187,17 +187,24 @@ export const data: EmployeesData = [
   }
 ]
 
+export const rowActions: RowActions = [
+  {
+    scope: 'global',
+    placement: 'beginning',
+    action: () => <input type="checkbox" name="blob" id="blob" onChange={() => console.log('check')}/>
+  },
+  {
+    scope: 'row',
+    placement: 'end',
+    action: (row) => <input type="checkbox" name="blob" id="blob" onChange={() => console.log(row)}/>
+  },
+]
+
 export const entriesSelectOptions = [5,10,25,50,100]
 
 export const textColor = '#000'
-
-// const accentColor = '#F2C53D'
 export const accentColor = '#769FAF'
-
-// export const headerBg = 'rgba(20, 90, 115, 0.6)'
 export const headerBg = 'rgba(118, 159, 175, 0.4)'
-
-// export const rowBg = 'rgba(20, 90, 115, 0.2)'
 export const rowBg = 'rgba(118, 159, 175, 0.1)'
 
 const App = () => {
@@ -208,7 +215,8 @@ const App = () => {
     headerBg,
     rowBg,
     accentColor,
-    entriesSelectOptions
+    entriesSelectOptions,
+    rowActions
   }
 
   return (

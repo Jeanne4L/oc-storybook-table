@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react"
 
 import Table, { TableProps } from "../parts/Table"
-import { accentColor, columns, data, entriesSelectOptions, headerBg, rowBg, textColor } from "../App"
+import { accentColor, columns, data, entriesSelectOptions, headerBg, rowActions, rowBg, textColor } from "../App"
 
 const meta = {
   title: 'Example/Table',
@@ -40,6 +40,7 @@ export const Primary: StoryObj<typeof meta> = {
     rowBg,
     accentColor,
     entriesSelectOptions,
+    rowActions,
     columns,
     data
   }

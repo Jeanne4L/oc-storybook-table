@@ -1,4 +1,6 @@
-type Employee = {
+import { ReactNode } from "react"
+
+export type Employee = {
   id: string
   firstName: string
   lastName: string
@@ -23,12 +25,13 @@ type Column = {
 export type ColumnsData = Column[]
 
 export type RowAction = {
-  key: string
-  content: React.ReactNode
-  scope: 'row' | 'global'
-  onRowClick: (id: unknown) => void
-  color?: string
-  onGlobalClick?: () => void
+  scope: 'row'
+  placement: 'beginning' | 'end'
+  action: (row: Employee) => ReactNode
+} | {
+  scope: 'global'
+  placement: 'beginning' | 'end'
+  action: () => ReactNode
 }
 
 export type RowActions = RowAction[]
