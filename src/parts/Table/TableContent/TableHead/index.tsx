@@ -17,7 +17,10 @@ const TableHead = () => {
   const renderActions = (placement: 'beginning' | 'end') =>
     rowActions?.map((action, i) => (
       action.placement === placement && (
-        <TableHeaderCell key={`${placement}-${i}`}>
+        <TableHeaderCell 
+          key={`${placement}-${i}`}
+          alignment={placement === 'beginning' ? 'left' : 'right'}
+        >
           {action.scope === 'global' ? action.action() : null}
         </TableHeaderCell>
       )
@@ -32,6 +35,7 @@ const TableHead = () => {
           <TableHeaderCell 
             key={column.id} 
             onClick={() => handleSort(index, sortConfig, data)}
+            alignment={column.alignment ?? 'left'} 
           >
             <div>
               {column.name}

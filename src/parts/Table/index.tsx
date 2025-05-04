@@ -3,7 +3,7 @@ import { ReactNode, useState } from "react"
 import { TableContext } from "../../context/Table"
 import RowsPerPageSelector from "../../components/RowsPerPageSelector"
 import SearchBar from "../../components/SearchBar"
-import { ColumnsData, EmployeesData, RowActions } from "../types"
+import { Column, RowAction } from "../../types"
 import { SortConfigType } from "./types"
 import Pagination from "./Pagination"
 import TableContent from "./TableContent"
@@ -12,19 +12,19 @@ import TableBody from "./TableContent/TableBody"
 import Toolbar from "./Toolbar"
 import { MainContainer } from "./styles"
 
-export type TableProps = {
-  columns: ColumnsData
-  data: EmployeesData
+export type TableProps<T extends Record<string | number, any>> = {
+  columns: Column<T>[]
+  data: T[]
   entriesSelectOptions: number[]
   children: ReactNode
   headerBg?: string
   rowBg?: string
   accentColor?: string
   textColor?: string
-  rowActions?: RowActions
+  rowActions?: RowAction<T>[]
 }
 
-interface CompoundTableComponent extends React.FC<TableProps> {
+interface CompoundTableComponent<T extends Record<string | number, any>> extends React.FC<TableProps<T>> {
   Pagination: typeof Pagination
   Head: typeof TableHead
   Body: typeof TableBody
@@ -34,7 +34,7 @@ interface CompoundTableComponent extends React.FC<TableProps> {
   Content: typeof TableContent
 }
 
-const Table: CompoundTableComponent = ({ 
+const TableComponent = <T extends Record<string, any>>({
   columns, 
   data, 
   entriesSelectOptions,
@@ -44,10 +44,10 @@ const Table: CompoundTableComponent = ({
   accentColor = '#769FAF',
   rowActions,
   children
-}) => {
-  const [filteredData, setFilteredData] = useState<EmployeesData>(data)
+}: TableProps<T>) => {
+  const [filteredData, setFilteredData] = useState<T[]>(data)
   const [itemsPerPage, setItemsPerPage] = useState<number>(5)
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState<number>(1)
   const [sortConfig, setSortConfig] = useState<SortConfigType>({
     columnIndex: 0,
     direction: 'asc',
@@ -66,7 +66,7 @@ const Table: CompoundTableComponent = ({
     setFilteredData(correspondingData)
   }
 
-  const handleSort = (columnIndex: number, sortConfig: SortConfigType, data: EmployeesData) => {
+  const handleSort = (columnIndex: number, sortConfig: SortConfigType, data: T[]) => {
     const isSameColumn = sortConfig.columnIndex === columnIndex
 
     const newSortConfig: SortConfigType = {
@@ -119,6 +119,7 @@ const Table: CompoundTableComponent = ({
   )
 }
 
+const Table = TableComponent as unknown as CompoundTableComponent<any>
 Table.Pagination = Pagination
 Table.Head = TableHead
 Table.Body = TableBody

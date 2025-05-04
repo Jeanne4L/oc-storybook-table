@@ -5,7 +5,10 @@ export const TableHeaderRow = styled.tr<{headerBg: string}>`
   width: 100%;
 `
 
-export const TableHeaderCell = styled.th<{columnWidth?: number}>`
+export const TableHeaderCell = styled.th<{
+  columnWidth?: number, 
+  alignment: 'left' | 'center' | 'right'
+}>`
   vertical-align: middle;
 
   > div {
@@ -15,6 +18,7 @@ export const TableHeaderCell = styled.th<{columnWidth?: number}>`
     padding: 16px 24px;
     width: ${props => props.columnWidth ? `${props.columnWidth}%` : 'auto'};
     cursor: pointer;
+    text-align: ${props => props.alignment};
   }
 
   & svg {
