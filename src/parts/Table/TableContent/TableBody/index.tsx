@@ -1,20 +1,22 @@
 import { useContent } from "../../../../context/Content"
 import { useTable } from "../../../../context/Table"
-import { Employee } from "../../../types"
 import { MessageTd, TableBodyRow, TableBodyCell } from "./styles"
 
-const TableBody = () => {
-  const { colors, columns, data, indexes, rowActions } = useTable()
+const TableBody = <T extends Record<string, any>>() => {
+  const { colors, columns, data, indexes, rowActions } = useTable<T>()
   const { isInsideContent } = useContent()
 
   if (!isInsideContent) {
     throw new Error('Table.Body must be inside Table.Content')
   }
 
-  const renderActions = (placement: 'beginning' | 'end', row: Employee) =>
+  const renderActions = (placement: 'beginning' | 'end', row: T) =>
     rowActions?.map((action, i) => (
       action.placement === placement && (
-        <TableBodyCell key={`${placement}-${i}`} alignment={placement === 'beginning' ? 'left' : 'right'}>
+        <TableBodyCell 
+          key={`${placement}-${i}`} 
+          alignment={placement === 'beginning' ? 'left' : 'right'}
+        >
           {action.action(row)}
         </TableBodyCell>
       )
@@ -29,7 +31,7 @@ const TableBody = () => {
       ) : (
         <>
           {data.slice(indexes.firstIndex, indexes.lastIndex).map((row, index) => (
-            <TableBodyRow key={index} isEven={index % 2 === 0} rowBg={colors.rowBg}>
+            <TableBodyRow key={`table-row-${index}`} isEven={index % 2 === 0} rowBg={colors.rowBg}>
               {renderActions('beginning', row)}
 
               {columns.map((column) => (

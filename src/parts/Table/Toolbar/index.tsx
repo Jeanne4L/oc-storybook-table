@@ -1,8 +1,8 @@
 import { PropsWithChildren } from "react"
 
 import { ToolbarContext } from "../../../context/Toolbar"
-import { ActionsContainer } from "./styles"
 import { useTable } from "../../../context/Table"
+import { ActionsContainer } from "./styles"
 
 const Toolbar: React.FC<PropsWithChildren> = ({ children }) => {
   const { isInsideTable } = useTable()

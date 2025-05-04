@@ -18,7 +18,7 @@ export default meta
 
 export const Primary: StoryObj<typeof meta> = {
   render: (args) => {
-    const tableArgs = args as TableProps
+    const tableArgs = args as TableProps<any>
 
     return (
       <Table {...tableArgs}>

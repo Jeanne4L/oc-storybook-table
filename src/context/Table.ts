@@ -1,7 +1,7 @@
 import { ChangeEvent, createContext, useContext } from "react"
 
-import { ColumnsData, EmployeesData, RowActions } from "../parts/types"
 import { SortConfigType, ThemeColors } from "../parts/Table/types"
+import { Column, RowAction } from "../types"
 
 type Pagination = {
   totalItems: number
@@ -16,21 +16,22 @@ type Toolbar = {
   handleInputChange: (value: string) => void
 }
 
-type TableContextType = Pagination & Toolbar & {
-  columns: ColumnsData
-  data: EmployeesData
+type TableContextType<T extends Record<string | number, any>> = 
+  Pagination & Toolbar & {
+  columns: Column<T>[]
+  data: T[]
   colors: ThemeColors
-  rowActions?: RowActions
+  rowActions?: RowAction<T>[]
   sortConfig: SortConfigType
   indexes: {
     firstIndex: number 
     lastIndex: number
   }
   isInsideTable: boolean
-  handleSort: (columnIndex: number, sortConfig: SortConfigType, data: EmployeesData) => void
+  handleSort: (columnIndex: number, sortConfig: SortConfigType, data: T[]) => void
 }
 
-export const TableContext = createContext<TableContextType>({
+export const TableContext = createContext<TableContextType<any>>({
   columns: [],
   data: [],
   colors: {
@@ -56,7 +57,7 @@ export const TableContext = createContext<TableContextType>({
   setCurrentPage: () => {},
   handleSelectOption: () => {},
   handleInputChange: () => {},
-  handleSort: () => {},
+  handleSort: () => {}
 })
 
-export const useTable = () => useContext(TableContext)
+export const useTable = <T extends Record<string | number, any>>() => useContext(TableContext) as TableContextType<T>

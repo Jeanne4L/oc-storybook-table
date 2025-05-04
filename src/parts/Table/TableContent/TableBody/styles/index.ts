@@ -6,12 +6,10 @@ export const TableBodyRow  = styled.tr<{isEven: boolean, rowBg: string}>`
   text-align: center;
 `
 
-export const TableBodyCell = styled.td<{alignment: string, columnWidth?: number}>`
+export const TableBodyCell = styled.td<{alignment: 'left' | 'center' | 'right'}>`
   text-align: ${props => props.alignment};
   vertical-align: top;
   padding: 16px 24px;
-  width: ${props => props.columnWidth}%;
-  max-width: 200px;
 `
 
 export const MessageTd = styled.td`

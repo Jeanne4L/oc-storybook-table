@@ -1,7 +1,6 @@
 import Table from './parts/Table'
-import { ColumnsData, EmployeesData, RowActions } from './parts/types'
 
-export const columns: ColumnsData = [
+export const columns = [
   {
     name: "First name",
     id:"firstName"
@@ -40,7 +39,7 @@ export const columns: ColumnsData = [
   }
 ]
 
-export const data: EmployeesData = [
+export const data = [
   {
     id:"johnSmith",
     firstName: "John",
@@ -187,7 +186,7 @@ export const data: EmployeesData = [
   }
 ]
 
-export const rowActions: RowActions = [
+export const rowActions: any[] = [
   {
     scope: 'global',
     placement: 'beginning',
@@ -196,7 +195,7 @@ export const rowActions: RowActions = [
   {
     scope: 'row',
     placement: 'end',
-    action: (row) => <input type="checkbox" name="blob" id="blob" onChange={() => console.log(row)}/>
+    action: (row: any) => <input type="checkbox" name="blob" id="blob" onChange={() => console.log(row)}/>
   },
 ]
 
