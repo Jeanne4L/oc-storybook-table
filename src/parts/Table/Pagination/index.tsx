@@ -1,4 +1,4 @@
-import Chevron from "../../../components/Chevron"
+import Chevron from "../../../components/icons/Chevron"
 import { useTable } from "../../../context/Table"
 import { getPaginationRange } from "./helpers/getPaginationRange"
 import { PageButton, PaginationContainer } from "./styles"
@@ -20,7 +20,7 @@ const Pagination = () => {
   const pagesRange = getPaginationRange(totalPages, currentPage)
 
   return (
-    <PaginationContainer>
+    <PaginationContainer data-testid="pagination">
       <Chevron 
         direction="left" 
         disabled={currentPage === 1}
