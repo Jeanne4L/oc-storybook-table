@@ -16,7 +16,7 @@ type Toolbar = {
   handleInputChange: (value: string) => void
 }
 
-type TableContextType<T extends Record<string | number, any>> = 
+export type TableContextType<T extends Record<string | number, any>> = 
   Pagination & Toolbar & {
   columns: Column<T>[]
   data: T[]

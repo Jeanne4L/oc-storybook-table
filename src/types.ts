@@ -13,5 +13,5 @@ export type RowAction<T> = {
 } | {
   scope: 'global'
   placement: 'beginning' | 'end'
-  action: () => ReactNode
+  action: (row?: T) => ReactNode
 }

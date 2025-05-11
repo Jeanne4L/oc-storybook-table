@@ -1,7 +1,7 @@
 
 import { ChangeEvent } from "react"
 
-import SearchIcon from "../../components/SearchIcon"
+import SearchIcon from "../icons/SearchIcon"
 import { useTable } from "../../context/Table"
 import { useToolbar } from "../../context/Toolbar"
 import { SearchBarContainer } from "./styles"

@@ -4,6 +4,8 @@ import { ContentContext } from "../../../context/Content"
 import { useTable } from "../../../context/Table"
 import { ScrollContainer, TableContainer } from "./styles"
 
+const value = { isInsideContent: true }
+
 const TableContent: React.FC<PropsWithChildren> = ({ children }) => {
   const { isInsideTable } = useTable()
 
@@ -12,7 +14,7 @@ const TableContent: React.FC<PropsWithChildren> = ({ children }) => {
   }
 
   return (
-    <ContentContext.Provider value={{isInsideContent: true}}>
+    <ContentContext.Provider value={value}>
       <ScrollContainer>
         <TableContainer>
           {children}

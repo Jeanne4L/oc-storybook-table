@@ -16,6 +16,7 @@ const TableBody = <T extends Record<string, any>>() => {
         <TableBodyCell 
           key={`${placement}-${i}`} 
           alignment={placement === 'beginning' ? 'left' : 'right'}
+          isClickable
         >
           {action.action(row)}
         </TableBodyCell>

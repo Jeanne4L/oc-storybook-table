@@ -1,4 +1,4 @@
-import SortIcon from "../../../../components/SortIcon"
+import SortIcon from "../../../../components/icons/SortIcon"
 import { useContent } from "../../../../context/Content"
 import { useTable } from "../../../../context/Table"
 import { TableHeaderRow, TableHeaderCell } from "./styles"
@@ -21,7 +21,9 @@ const TableHead = () => {
           key={`${placement}-${i}`}
           alignment={placement === 'beginning' ? 'left' : 'right'}
         >
-          {action.scope === 'global' ? action.action() : null}
+          <div>
+            {action.scope === 'global' ? action.action() : null}
+          </div>
         </TableHeaderCell>
       )
     ))

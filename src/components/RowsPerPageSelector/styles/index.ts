@@ -12,4 +12,8 @@ export const EntriesSelectContainer = styled.div<{borderColor: string, bgColor: 
     padding: 8px 4px;
     cursor: pointer;
   }
+
+  option {
+    background-color: #fff;
+  }
 `

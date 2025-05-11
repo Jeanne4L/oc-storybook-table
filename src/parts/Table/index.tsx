@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react"
+import { ReactNode, useEffect, useState } from "react"
 
 import { TableContext } from "../../context/Table"
 import RowsPerPageSelector from "../../components/RowsPerPageSelector"
@@ -15,7 +15,7 @@ import { MainContainer } from "./styles"
 export type TableProps<T extends Record<string | number, any>> = {
   columns: Column<T>[]
   data: T[]
-  entriesSelectOptions: number[]
+  entriesSelectOptions?: number[]
   children: ReactNode
   headerBg?: string
   rowBg?: string
@@ -37,7 +37,7 @@ interface CompoundTableComponent<T extends Record<string | number, any>> extends
 const TableComponent = <T extends Record<string, any>>({
   columns, 
   data, 
-  entriesSelectOptions,
+  entriesSelectOptions = [5, 10, 25],
   textColor = '#000',
   headerBg = 'rgba(118, 159, 175, 0.4)',
   rowBg = 'rgba(118, 159, 175, 0.1)',
@@ -46,13 +46,17 @@ const TableComponent = <T extends Record<string, any>>({
   children
 }: TableProps<T>) => {
   const [filteredData, setFilteredData] = useState<T[]>(data)
-  const [itemsPerPage, setItemsPerPage] = useState<number>(5)
+  const [itemsPerPage, setItemsPerPage] = useState<number>(entriesSelectOptions[0])
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [sortConfig, setSortConfig] = useState<SortConfigType>({
     columnIndex: 0,
     direction: 'asc',
   })
 
+  useEffect(() => {
+    setFilteredData(data)
+  }, [data])
+  
   const handleSelectOption = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setItemsPerPage(Number(event.target.value))
   }
@@ -75,11 +79,29 @@ const TableComponent = <T extends Record<string, any>>({
     }
 
     const sortedData = [...data].sort((a, b) => {
-      const aValue = String(Object.values(a)[columnIndex])
-      const bValue = String(Object.values(b)[columnIndex])
+      const aValue = Object.values(a)[columnIndex + 1]
+      const bValue = Object.values(b)[columnIndex + 1]
+
+      const aNum = Number(aValue)
+      const bNum = Number(bValue)
+
+      if (!isNaN(aNum) && !isNaN(bNum)) {
+        return newSortConfig.direction === 'asc' ? aNum - bNum : bNum - aNum
+      }
+
+      const aStr = String(aValue)
+      const bStr = String(bValue)
+
+      const aDate = Date.parse(aStr)
+      const bDate = Date.parse(bStr)
+
+      if (!isNaN(aDate) && !isNaN(bDate)) {
+        return newSortConfig.direction === 'asc' ? aDate - bDate : bDate - aDate
+      }
+
       return newSortConfig.direction === 'asc'
-        ? aValue.localeCompare(bValue)
-        : bValue.localeCompare(aValue)
+        ? aStr.localeCompare(bStr)
+        : bStr.localeCompare(aStr)
     })
 
     setSortConfig(newSortConfig)
