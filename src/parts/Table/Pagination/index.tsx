@@ -26,11 +26,12 @@ const Pagination = () => {
         disabled={currentPage === 1}
         onClick={() => setCurrentPage(currentPage - 1)} 
         color={colors.textColor}
+        dataTestId="previous"
       />
 
       {pagesRange.map((pageNumber, index) => (
         pageNumber === 'dots' ? (
-          <span key={`dots-${index}`}>...</span>
+          <span key={`dots-${index}`} data-testid='ellipsis'>...</span>
         ) : (
         <PageButton 
           key={pageNumber} 
@@ -38,6 +39,7 @@ const Pagination = () => {
           accentColor={colors.accentColor}
           textColor={colors.textColor}
           onClick={() => setCurrentPage(pageNumber)}
+          data-testid={`page-${pageNumber}`}
         >
           {pageNumber}
         </PageButton>
@@ -47,6 +49,7 @@ const Pagination = () => {
         disabled={currentPage === totalPages}
         onClick={() => setCurrentPage(currentPage + 1)} 
         color={colors.textColor}
+        dataTestId="next"
       />
     </PaginationContainer>
   )
