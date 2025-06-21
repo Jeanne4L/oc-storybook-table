@@ -39,7 +39,7 @@ const Pagination = () => {
           accentColor={colors.accentColor}
           textColor={colors.textColor}
           onClick={() => setCurrentPage(pageNumber)}
-          data-testid={`page-${pageNumber}`}
+          data-testid="pagination-item"
         >
           {pageNumber}
         </PageButton>

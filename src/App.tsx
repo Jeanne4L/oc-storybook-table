@@ -30,14 +30,28 @@ export const data = [
     firstName: "Jane",
     lastName: "Doe",
     remainingTime: 3829,
-    date: new Date('1993-10-12').toISOString()
+    date: new Date('1997-10-12').toISOString()
   },
   {
-    id:"timBlob",
-    firstName: "Tim",
-    lastName: "Blob",
+    id:"tahitiBob",
+    firstName: "Tahiti",
+    lastName: "Bob",
     remainingTime: 12,
     date: new Date('1993-08-19').toISOString()
+  },
+  {
+    id:"charlieTheunicorn",
+    firstName: "Charlie",
+    lastName: "Theunicorn",
+    remainingTime: 568,
+    date: new Date('952-08-13').toISOString()
+  },
+  {
+    id:"henrySugar",
+    firstName: "Henry",
+    lastName: "Sugar",
+    remainingTime: 8,
+    date: new Date('2025-08-13').toISOString()
   }
 ]
 

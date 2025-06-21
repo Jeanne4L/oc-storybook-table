@@ -10,7 +10,7 @@ const mockContext = {
 } as unknown as TableContextType<any>
 
 describe('select', () => {
-  beforeEach(() => {
+  test('should return the correct options', () => {
     render(
       <Table columns={[]} data={[]} entriesSelectOptions={mockContext.entriesSelectOptions}>
         <Table.Toolbar>
@@ -18,9 +18,7 @@ describe('select', () => {
         </Table.Toolbar>
       </Table>
     )
-  })
 
-  test('should return the correct options', () => {
     const select = screen.getByRole('combobox')
     const options = within(select).getAllByRole('option')
 

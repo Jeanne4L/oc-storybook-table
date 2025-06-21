@@ -15,7 +15,12 @@ const RowsPerPageSelector = () => {
   return (
     <EntriesSelectContainer borderColor={colors.accentColor} bgColor={colors.headerBg}>
       <span>Show</span>
-      <select name="entries" id="entries" onChange={(event) => handleSelectOption(event)}>
+      <select 
+        name="entries" 
+        id="entries" 
+        data-testid="entries-selector"
+        onChange={(event) => handleSelectOption(event)}
+      >
         {sortedOptions.map((option) => (
           <option value={option} key={option}>{option}</option>
         ))}

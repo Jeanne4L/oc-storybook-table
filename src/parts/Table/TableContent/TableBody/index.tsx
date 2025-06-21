@@ -27,12 +27,17 @@ const TableBody = <T extends Record<string, any>>() => {
     <tbody>
       {data.length === 0 ? (
         <tr>
-          <MessageTd colSpan={columns.length}>No data available</MessageTd>
+          <MessageTd colSpan={columns.length} data-testid="empty-message">No data available</MessageTd>
         </tr>
       ) : (
         <>
           {data.slice(indexes.firstIndex, indexes.lastIndex).map((row, index) => (
-            <TableBodyRow key={`table-row-${index}`} isEven={index % 2 === 0} rowBg={colors.rowBg}>
+            <TableBodyRow 
+              key={`table-row-${index}`} 
+              isEven={index % 2 === 0} 
+              rowBg={colors.rowBg} 
+              data-testid="table-row"
+            >
               {renderActions('beginning', row)}
 
               {columns.map((column) => (
