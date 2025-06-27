@@ -1,10 +1,21 @@
 import { render, screen } from "@testing-library/react"
 import '@testing-library/jest-dom'
+import { vi } from "vitest"
 
 import { columns, data } from "../../../App"
 import Table from ".."
 
 describe('Pagination', () => {
+  test('must be called inside the table', () => {
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {})
+
+    expect(() => {
+      render(<Table.Pagination />)
+    }).toThrow('Table.Pagination must be inside Table')
+
+    consoleError.mockRestore()
+  })
+
   test('should be hidden if there is only one page', () => {
     render(
       <Table columns={[]} data={[]}>

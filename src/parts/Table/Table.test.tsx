@@ -112,30 +112,32 @@ describe('Table', () => {
     
     const sortButtons = screen.getAllByTestId('sort-button')
 
-    // ASCENDING SORT
+    // SORT BY NAME
     fireEvent.click(sortButtons[0])
-
     expect(getColumnValues(0)).toEqual(['Charlie', 'Henry', 'Jane'])
 
-    //  DESCENDING SORT
     fireEvent.click(sortButtons[0])
-
     expect(getColumnValues(0)).toEqual(['Tahiti', 'John', 'Jane'])
 
     // SORT BY NUMBER
     fireEvent.click(sortButtons[2])
-
     expect(getColumnValues(2)).toEqual(['8', '12', '500'])
 
-    // SORT BY DATE
-    fireEvent.click(sortButtons[3])
+    fireEvent.click(sortButtons[2])
+    expect(getColumnValues(2)).toEqual(['3829', '568', '500'])
 
+    // SORT BY DATE
     const getStringDate = (date: string) => {
       return new Date(date).toISOString()
     }
 
-    const expected = [getStringDate('952-08-13'), getStringDate('1993-08-19'), getStringDate('1997-10-12')]
-    expect(getColumnValues(3)).toEqual(expected)
+    fireEvent.click(sortButtons[3])
+    const ascExpected = [getStringDate('952-08-13'), getStringDate('1993-08-19'), getStringDate('1997-10-12')]
+    expect(getColumnValues(3)).toEqual(ascExpected)
+
+    fireEvent.click(sortButtons[3])
+    const descExpected = [getStringDate('2025-08-13'), getStringDate('2000-03-18'), getStringDate('1997-10-12')]
+    expect(getColumnValues(3)).toEqual(descExpected)
   })
 
   test.each([
