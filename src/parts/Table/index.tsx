@@ -37,7 +37,7 @@ interface CompoundTableComponent<T extends Record<string | number, any>> extends
 const TableComponent = <T extends Record<string, any>>({
   columns, 
   data, 
-  entriesSelectOptions = [5, 10, 25],
+  entriesSelectOptions = [data.length],
   textColor = '#000',
   headerBg = '#DAE0E7',
   rowBg = '#F3F5F7',
