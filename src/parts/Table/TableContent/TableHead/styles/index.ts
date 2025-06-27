@@ -18,7 +18,12 @@ export const TableHeaderCell = styled.th<{
     padding: 16px 24px;
     width: ${props => props.columnWidth ? `${props.columnWidth}%` : 'auto'};
     cursor: pointer;
-    text-align: ${props => props.alignment};
+    justify-content: ${ props => props.alignment === 'left'
+      ? 'flex-start'
+      : props.alignment === 'right' 
+        ? 'flex-end'
+        : 'center'
+    }
   }
 
   & svg {
