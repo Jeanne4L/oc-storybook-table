@@ -27,22 +27,8 @@ OCTable uses the compound component pattern. You compose your table using the pr
 - `<Table.Pagination>`: page navigation component (**optional**)
 
 
-## Props
-
-| Prop                 | Type           | Required        | Default value  | Descripion                                   |
-| -------------------- |:--------------:| :--------------:|:--------------:|:--------------------------------------------:|
-| columns              | Column\<T>[]    | Yes            | -              | Table column definitions                     |
-| data                 | T[]            | Yes             | -              | Data to be displayed                         |
-| entriesSelectOptions | number[]       | No              | [10, 25, 50]   | List of entry counts available in selector   |
-| children             | ReactNode      | Yes             | -              | Nested compound components                   |
-| headerBg             | string         | No              | #DAE0E7      | CSS background for the header row            |
-| rowBg                | string         | No              | #F3F5F7      | CSS background for data rows                 |
-| accentColor          | string         | No              | #4E80B2      | Color for active elements (pagination, etc.) |
-| textColor            | string         | No              | #000           | Text color for all rows                      |
-| rowActions           | RowAction\<T>[] | No             | -              | Optional actions per row (edit, delete, etc) |
-
-
 ## Types
+
 
 ### Column<T>
 
@@ -56,8 +42,8 @@ type Column<T extends Record<string | number, any>> = {
 }
 ```
 
-| Property   | Type                                | Required        | Descripion                                        |
-| ---------- |:-----------------------------------:| :--------------:|:-------------------------------------------------:|
+| Property   | Type                                | Required        | Description                                       |
+| :--------- | :---------------------------------- | :-------------- | :------------------------------------------------ |
 | name       | string                              | Yes             | Label displayed in the table header               |
 | id         | Extract<keyof T, string \| number>  | Yes             | Key used to extract the value from the row object |
 | alignment  | "left" \| "right" \| "center"       | No              | Text alignment inside the column                  |
@@ -87,8 +73,8 @@ type RowAction<T> =
 
 Injected once per row. Can access row data.
 
-| Property   | Type                   | Required   | Descripion                                        |
-| ---------- |:----------------------:| :---------:|:-------------------------------------------------:|
+| Property   | Type                   | Required   | Description                                       |
+| :--------- | :--------------------- | :--------- | :------------------------------------------------ |
 | scope      | 'row'                  | Yes        | Declares the action is tied to a data row         |
 | placement  | 'beginning' \| 'end'   | Yes        | Where the action cell is inserted in the row      |
 | action     | (row: T) => ReactNode  | Yes        | Function returning a React element                |
@@ -97,17 +83,38 @@ Injected once per row. Can access row data.
 
 Injected once in the table head or footer (not per row). Used for global controls.
 
-| Property  | Type                   | Required   | Descripion                                                                                   |
-| --------- |:----------------------:| :---------:|:--------------------------------------------------------------------------------------------:|
+| Property  | Type                   | Required   | Description                                                                                  |
+| :-------- | :--------------------- | :--------- | :------------------------------------------------------------------------------------------- |
 | scope     | 'global'               | Yes        | Declares the action is rendered in both the header and all table rows                        |
 | placement | 'beginning' \| 'end'   | Yes        | Position of the action column in the table                                                   |
-| action    | (row: T) => ReactNode  | Yes        | Function rendering a global element (if row is undefined) or row element (if row is defined) |
+| action    | (row?: T) => ReactNode | Yes        | Function rendering a global element (if row is undefined) or row element (if row is defined) |
+
+
+## Props
+
+| Prop                 | Type            | Required        | Default value  | Description                                  |
+| :------------------- | :-------------- | :-------------- | :------------- | :------------------------------------------- |
+| columns              | Column\<T>[]    | Yes             | -              | Table column definitions                     |
+| data                 | T[]             | Yes             | -              | Data to be displayed                         |
+| children             | ReactNode       | Yes             | -              | Nested compound components                   |
+| rowActions           | RowAction\<T>[] | No              | -              | Optional actions per row (edit, delete, etc) |
+| entriesSelectOptions | number[]        | No              | [data.length]  | List of entry counts available in selector   |
+| headerBg             | string          | No              | #DAE0E7      | CSS background for the header row            |
+| rowBg                | string          | No              | #F3F5F7      | CSS background for data rows                 |
+| accentColor          | string          | No              | #4E80B2      | Color for active elements (pagination, etc.) |
+| textColor            | string          | No              | #000           | Text color for all rows                      |
 
 
 ## Example
 
 ```tsx
-import { Table } from 'octable'
+import { Table } from 'octable' // Subcomponents accessed via Table.X
+
+type User = {
+  id: number
+  name: string
+  email: string
+}
 
 const columns = [
   { name: 'ID', id: 'id', alignment: 'left' },
@@ -115,7 +122,7 @@ const columns = [
   { name: 'Email', id: 'email', alignment: 'left' }
 ]
 
-const data = [
+const data: User[] = [
   { id: 1, name: 'Alice Dupont', email: 'alice@example.com' },
   { id: 2, name: 'Bob Martin', email: 'bob@example.com' },
   { id: 3, name: 'Charlie Dubois', email: 'charlie@example.com' }
@@ -130,19 +137,19 @@ const rowActions = [
   {
     scope: 'global',
     placement: 'beginning',
-    action: () => <button onClick={() => alert('Add new user')}>Add User</button>
+    action: () => <button onClick={() => alert('Delete all users')}>🗑️</button>
   }
 ]
 
 const tableArgs = {
   columns,
   data,
+  rowActions,
   entriesSelectOptions: [10, 25, 50],
   headerBg: '#f2f2f2',
   rowBg: '#fff',
   accentColor: '#007bff',
-  textColor: '#333',
-  rowActions
+  textColor: '#333'
 }
 
 <Table {...tableArgs}>
@@ -150,10 +157,12 @@ const tableArgs = {
     <Table.EntriesSelector />
     <Table.SearchBar />
   </Table.Toolbar>
+
   <Table.Content>
     <Table.Head />
     <Table.Body />
   </Table.Content>
+  
   <Table.Pagination />
 </Table>
 ```
