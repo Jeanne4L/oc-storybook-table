@@ -19,6 +19,7 @@ const TableHead = () => {
       action.placement === placement && (
         <TableHeaderCell 
           key={`${placement}-${i}`}
+          data-testid="sort-button"
           alignment={placement === 'beginning' ? 'left' : 'right'}
         >
           <div>
@@ -30,12 +31,13 @@ const TableHead = () => {
 
   return (
     <thead>
-      <TableHeaderRow headerBg={colors.headerBg}>
+      <TableHeaderRow headerBg={colors.headerBg} data-testid="table-header">
         {renderActions('beginning')}
 
         {columns.map((column, index) => (
           <TableHeaderCell 
             key={column.id} 
+            data-testid="sort-button"
             onClick={() => handleSort(index, sortConfig, data)}
             alignment={column.alignment ?? 'left'} 
           >

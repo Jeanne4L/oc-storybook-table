@@ -6,7 +6,7 @@ export const PaginationContainer = newStyled.div`
   gap: 16px;
 `
 
-export const PageButton = newStyled.span<{currentPage: boolean, accentColor: string, textColor: string}>`
+export const PageButton = newStyled.button<{currentPage: boolean, accentColor: string, textColor: string}>`
   width: 24px;
   height: 24px;
   display: flex;
@@ -15,5 +15,7 @@ export const PageButton = newStyled.span<{currentPage: boolean, accentColor: str
   color: ${props => props.currentPage ? props.accentColor : props.textColor};
   cursor: pointer;
   font-weight: ${props => props.currentPage && 900};
-  border-bottom: ${props => props.currentPage ? `solid 2px ${props.accentColor}` : 'none'};
+  border: none;
+  background: none;
+  border-bottom: solid 2px ${props => props.currentPage ? props.accentColor : 'transparent'};
 `

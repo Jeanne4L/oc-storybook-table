@@ -49,8 +49,8 @@ const TableComponent = <T extends Record<string, any>>({
   const [itemsPerPage, setItemsPerPage] = useState<number>(entriesSelectOptions[0])
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [sortConfig, setSortConfig] = useState<SortConfigType>({
-    columnIndex: 0,
-    direction: 'asc',
+    columnIndex: null,
+    direction: 'desc',
   })
 
   useEffect(() => {

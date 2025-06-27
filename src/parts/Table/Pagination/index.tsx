@@ -1,4 +1,4 @@
-import Chevron from "../../../components/Chevron"
+import Chevron from "../../../components/icons/Chevron"
 import { useTable } from "../../../context/Table"
 import { getPaginationRange } from "./helpers/getPaginationRange"
 import { PageButton, PaginationContainer } from "./styles"
@@ -20,17 +20,18 @@ const Pagination = () => {
   const pagesRange = getPaginationRange(totalPages, currentPage)
 
   return (
-    <PaginationContainer>
+    <PaginationContainer data-testid="pagination">
       <Chevron 
         direction="left" 
         disabled={currentPage === 1}
         onClick={() => setCurrentPage(currentPage - 1)} 
         color={colors.textColor}
+        dataTestId="previous"
       />
 
       {pagesRange.map((pageNumber, index) => (
         pageNumber === 'dots' ? (
-          <span key={`dots-${index}`}>...</span>
+          <span key={`dots-${index}`} data-testid='ellipsis'>...</span>
         ) : (
         <PageButton 
           key={pageNumber} 
@@ -38,6 +39,7 @@ const Pagination = () => {
           accentColor={colors.accentColor}
           textColor={colors.textColor}
           onClick={() => setCurrentPage(pageNumber)}
+          data-testid="pagination-item"
         >
           {pageNumber}
         </PageButton>
@@ -47,6 +49,7 @@ const Pagination = () => {
         disabled={currentPage === totalPages}
         onClick={() => setCurrentPage(currentPage + 1)} 
         color={colors.textColor}
+        dataTestId="next"
       />
     </PaginationContainer>
   )

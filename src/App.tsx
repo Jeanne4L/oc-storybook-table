@@ -1,5 +1,3 @@
-import Table from './parts/Table'
-
 export const columns = [
   {
     name: "First name",
@@ -10,32 +8,12 @@ export const columns = [
     id: "lastName"
   },
   {
-    name: "Date of birth",
-    id: "birthDate"
+    name: "Remaining time",
+    id: "remainingTime"
   },
   {
-    name: "Start date",
-    id: "startDate"
-  },
-  {
-    name: "Department",
-    id: "department"
-  },
-  {
-    name: "Zip code",
-    id: "zipCode"
-  },
-  {
-    name: "Street",
-    id: "street"
-  },
-  {
-    name: "City",
-    id: "city"
-  },
-  {
-    name: "State",
-    id: "state"
+    name: "Date",
+    id: "date"
   }
 ]
 
@@ -44,162 +22,38 @@ export const data = [
     id:"johnSmith",
     firstName: "John",
     lastName: "Smith",
-    birthDate: "10/01/1990",
-    startDate: "01/01/2025",
-    department: "Marketing",
-    zipCode: "10001",
-    street: "Main street",
-    city: "New York City",
-    state: "New York"
+    remainingTime: 500,
+    date: new Date('2000-03-18').toISOString()
   },
   {
     id:"janeDoe",
     firstName: "Jane",
     lastName: "Doe",
-    birthDate: "15/11/1975",
-    startDate: "23/04/2001",
-    department: "Sales",
-    zipCode: "19980",
-    street: "Walnut shade road",
-    city: "Woodside",
-    state: "Delaware"
+    remainingTime: 3829,
+    date: new Date('1997-10-12').toISOString()
   },
   {
-    id:"thimotheBlob",
-    firstName: "Timothé",
-    lastName: "Blob",
-    birthDate: "30/07/2000",
-    startDate: "23/11/2024",
-    department: "Ceci est un service avec un texte très long",
-    zipCode: "29401",
-    street: "Spring street",
-    city: "Charleston",
-    state: "South Carolina"
+    id:"tahitiBob",
+    firstName: "Tahiti",
+    lastName: "Bob",
+    remainingTime: 12,
+    date: new Date('1993-08-19').toISOString()
   },
   {
-    id:"rogerSmith",
-    firstName: "Roger",
-    lastName: "Smith",
-    birthDate: "10/01/1990",
-    startDate: "01/01/2025",
-    department: "Marketing",
-    zipCode: "10001",
-    street: "Main street",
-    city: "New York City",
-    state: "New York"
+    id:"charlieTheunicorn",
+    firstName: "Charlie",
+    lastName: "Theunicorn",
+    remainingTime: 568,
+    date: new Date('952-08-13').toISOString()
   },
   {
-    id:"marieDoe",
-    firstName: "Marie",
-    lastName: "Doe",
-    birthDate: "15/11/1975",
-    startDate: "23/04/2001",
-    department: "Sales",
-    zipCode: "19980",
-    street: "Walnut shade road",
-    city: "Woodside",
-    state: "Delaware"
-  },
-  {
-    id:"jasonBlob",
-    firstName: "Jason",
-    lastName: "Blob",
-    birthDate: "30/07/2000",
-    startDate: "23/11/2024",
-    department: "Ceci est un service avec un texte très long",
-    zipCode: "29401",
-    street: "Spring street",
-    city: "Charleston",
-    state: "South Carolina"
-  },
-  {
-    id:"albertSmith",
-    firstName: "Albert",
-    lastName: "Smith",
-    birthDate: "10/01/1990",
-    startDate: "01/01/2025",
-    department: "Marketing",
-    zipCode: "10001",
-    street: "Main street",
-    city: "New York City",
-    state: "New York"
-  },
-  {
-    id:"karineDoe",
-    firstName: "Karine",
-    lastName: "Doe",
-    birthDate: "15/11/1975",
-    startDate: "23/04/2001",
-    department: "Sales",
-    zipCode: "19980",
-    street: "Walnut shade road",
-    city: "Woodside",
-    state: "Delaware"
-  },
-  {
-    id:"aliceBlob",
-    firstName: "Alice",
-    lastName: "Blob",
-    birthDate: "30/07/2000",
-    startDate: "23/11/2024",
-    department: "Ceci est un service avec un texte très long",
-    zipCode: "29401",
-    street: "Spring street",
-    city: "Charleston",
-    state: "South Carolina"
-  },
-  {
-    id:"thomasSmith",
-    firstName: "Thomas",
-    lastName: "Smith",
-    birthDate: "10/01/1990",
-    startDate: "01/01/2025",
-    department: "Marketing",
-    zipCode: "10001",
-    street: "Main street",
-    city: "New York City",
-    state: "New York"
-  },
-  {
-    id:"pierreDoe",
-    firstName: "Pierre",
-    lastName: "Doe",
-    birthDate: "15/11/1975",
-    startDate: "23/04/2001",
-    department: "Sales",
-    zipCode: "19980",
-    street: "Walnut shade road",
-    city: "Woodside",
-    state: "Delaware"
-  },
-  {
-    id:"leaBlob",
-    firstName: "Léa",
-    lastName: "Blob",
-    birthDate: "30/07/2000",
-    startDate: "23/11/2024",
-    department: "Ceci est un service avec un texte très long",
-    zipCode: "29401",
-    street: "Spring street",
-    city: "Charleston",
-    state: "South Carolina"
+    id:"henrySugar",
+    firstName: "Henry",
+    lastName: "Sugar",
+    remainingTime: 8,
+    date: new Date('2025-08-13').toISOString()
   }
 ]
-
-export const rowActions: any[] = [
-  {
-    scope: 'global',
-    placement: 'beginning',
-    action: () => <input type="checkbox" name="blob" id="blob" onChange={() => console.log('check')}/>
-  },
-  {
-    scope: 'row',
-    placement: 'end',
-    action: (row: any) => <input type="checkbox" name="blob" id="blob" onChange={() => console.log(row)}/>
-  },
-]
-
-export const entriesSelectOptions = [5,10,25,50,100]
 
 export const textColor = '#000'
 export const accentColor = '#769FAF'
@@ -207,29 +61,8 @@ export const headerBg = 'rgba(118, 159, 175, 0.4)'
 export const rowBg = 'rgba(118, 159, 175, 0.1)'
 
 const App = () => {
-  const tableArgs = {
-    columns,
-    data,
-    textColor,
-    headerBg,
-    rowBg,
-    accentColor,
-    entriesSelectOptions,
-    rowActions
-  }
-
   return (
-    <Table {...tableArgs}>
-      <Table.Toolbar>
-        <Table.EntriesSelector />
-        <Table.SearchBar />
-      </Table.Toolbar>
-      <Table.Content>
-        <Table.Head />
-        <Table.Body />
-      </Table.Content>
-      <Table.Pagination />
-    </Table>
+    <></>
   )
 }
 

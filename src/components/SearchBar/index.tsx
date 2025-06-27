@@ -1,9 +1,9 @@
 
 import { ChangeEvent } from "react"
 
-import SearchIcon from "../icons/SearchIcon"
 import { useTable } from "../../context/Table"
 import { useToolbar } from "../../context/Toolbar"
+import SearchIcon from "../icons/SearchIcon"
 import { SearchBarContainer } from "./styles"
 
 const SearchBar = () => {
@@ -16,7 +16,13 @@ const SearchBar = () => {
 
   return (
     <SearchBarContainer borderColor={colors.accentColor} bgColor={colors.headerBg}>
-      <input type="text" onChange={(event: ChangeEvent<HTMLInputElement>) => handleInputChange(event.target.value)} />
+      <input 
+        type="text" 
+        data-testid="search-bar"
+        onChange={
+          (event: ChangeEvent<HTMLInputElement>) => handleInputChange(event.target.value)
+        }
+      />
       <SearchIcon color={colors.textColor} />
     </SearchBarContainer>
   )
