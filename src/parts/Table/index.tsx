@@ -39,9 +39,9 @@ const TableComponent = <T extends Record<string, any>>({
   data, 
   entriesSelectOptions = [5, 10, 25],
   textColor = '#000',
-  headerBg = 'rgba(118, 159, 175, 0.4)',
-  rowBg = 'rgba(118, 159, 175, 0.1)',
-  accentColor = '#769FAF',
+  headerBg = '#DAE0E7',
+  rowBg = '#F3F5F7',
+  accentColor = '#4E80B2',
   rowActions,
   children
 }: TableProps<T>) => {

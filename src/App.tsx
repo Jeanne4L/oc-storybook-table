@@ -56,9 +56,9 @@ export const data = [
 ]
 
 export const textColor = '#000'
-export const accentColor = '#769FAF'
-export const headerBg = 'rgba(118, 159, 175, 0.4)'
-export const rowBg = 'rgba(118, 159, 175, 0.1)'
+export const accentColor = '#4E80B2'
+export const headerBg = '#DAE0E7'
+export const rowBg = '#F3F5F7'
 
 const App = () => {
   return (
