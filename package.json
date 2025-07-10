@@ -1,22 +1,24 @@
 {
-  "name": "storybook-table",
+  "name": "octable",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -p tsconfig.build.json && vite build && node scripts/build-package.cjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test": "vitest run --coverage"
   },
-  "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
+  "peerDependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^4.0.0",
@@ -50,5 +52,8 @@
     "extends": [
       "plugin:storybook/recommended"
     ]
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
