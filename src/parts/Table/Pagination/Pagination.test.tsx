@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import '@testing-library/jest-dom'
 import { vi } from "vitest"
 
@@ -41,7 +41,35 @@ describe('Pagination', () => {
     const previousChevron = screen.getByTestId('previous')
 
     expect(getComputedStyle(previousChevron).opacity).toBe('0.2')
-    // TODO  check next is disabled
+  })
+
+  test('click on buttons change current page', () => {
+    render(
+      <Table columns={columns} data={data} entriesSelectOptions={[2]}>
+        <Table.Toolbar>
+          <Table.Pagination />
+        </Table.Toolbar>
+      </Table>
+    )
+
+    const expectPageToBeActive = (index: number) => {
+      const page = screen.getAllByTestId('pagination-item')[index]
+      expect(getComputedStyle(page).color).toBe('rgb(78, 128, 178)')
+    }
+
+    expectPageToBeActive(0)
+    
+    // CLICK ON NEXT BUTTON
+    const nextChevron = screen.getByTestId('next')
+    fireEvent.click(nextChevron)
+
+    expectPageToBeActive(1)
+
+    // CLICK ON PREVIOUS BUTTON
+    const prevChevron = screen.getByTestId('previous')
+    fireEvent.click(prevChevron)
+
+    expectPageToBeActive(0)
   })
 
   test('use ellipsis if there are too many pages', () => {
