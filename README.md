@@ -1,5 +1,7 @@
 # OCTable 
 
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Jeanne4L/oc-storybook-table)
+
 OCTable is a compound React component library for rendering customizable data tables.
 
 

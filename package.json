@@ -1,6 +1,6 @@
 {
   "name": "octable",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "OCTable is a compound React component library for rendering customizable data tables",
   "type": "module",
   "main": "dist/index.js",
@@ -10,6 +10,22 @@
     "dist",
     "README.md"
   ],
+  "keywords": [
+    "react",
+    "react-component",
+    "data-table",
+    "table",
+    "pagination",
+    "search",
+    "data",
+    "customizable"
+  ],
+  "author": "Jeanne4L",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jeanne4L/oc-storybook-table"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
