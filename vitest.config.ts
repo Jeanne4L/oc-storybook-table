@@ -18,6 +18,7 @@ export default defineConfig({
         '**/src/vite-env.d.ts',
         '**/src/context/**',
         '**/src/types.ts',
+        '**/src/index.ts',
         '**/src/*/*/types.ts',
         '**/src/api/**',
         '**/src/App.tsx',
