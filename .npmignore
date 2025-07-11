@@ -1,0 +1,4 @@
+*.test.tsx
+.storybook/
+stories/
+package-lock.json
