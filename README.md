@@ -26,9 +26,10 @@ OCTable uses the compound component pattern. You compose your table using the pr
 - `<Table.SearchBar>`: input to filter rows by keyword (**optional**)
 - `<Table.Pagination>`: page navigation component (**optional**)
 
+**Note**: If you prefer to use your own components for pagination, row count selection, or the search bar, you can use the `usePagination` and `useToolbar` hooks to connect your interface to the table’s internal logic.
+
 
 ## Types
-
 
 ### Column<T>
 
@@ -36,16 +37,16 @@ Defines the structure of a column in the table.
 
 ```ts
 type Column<T extends Record<string | number, any>> = {
-  name: string
   id: Extract<keyof T, string | number>
+  name: string
   alignment?: "left" | "right" | "center"
 }
 ```
 
 | Property   | Type                                | Required        | Description                                       |
 | :--------- | :---------------------------------- | :-------------- | :------------------------------------------------ |
-| name       | string                              | Yes             | Label displayed in the table header               |
 | id         | Extract<keyof T, string \| number>  | Yes             | Key used to extract the value from the row object |
+| name       | string                              | Yes             | Label displayed in the table header               |
 | alignment  | "left" \| "right" \| "center"       | No              | Text alignment inside the column                  |
 
 
@@ -67,6 +68,7 @@ type RowAction<T> =
     }
 ```
 
+
 #### Variants
 
 - Row-scoped action
@@ -81,7 +83,7 @@ Injected once per row. Can access row data.
 
 - Global-scoped action
 
-Injected once in the table head or footer (not per row). Used for global controls.
+Injected into the table head and each row. Used for global controls.
 
 | Property  | Type                   | Required   | Description                                                                                  |
 | :-------- | :--------------------- | :--------- | :------------------------------------------------------------------------------------------- |
@@ -102,7 +104,68 @@ Injected once in the table head or footer (not per row). Used for global control
 | headerBg             | string          | No              | #DAE0E7      | CSS background for the header row            |
 | rowBg                | string          | No              | #F3F5F7      | CSS background for data rows                 |
 | accentColor          | string          | No              | #4E80B2      | Color for active elements (pagination, etc.) |
-| textColor            | string          | No              | #000           | Text color for all rows                      |
+| borderColor          | string          | No              | #C1CBD7      | Color for borders of the table               |
+| textColor            | string          | No              | #000           | Text color for all elements                  |
+
+
+## Advanced Usage: Custom Controls with Hooks
+
+For greater flexibility, the library provides hooks that let you build your own custom pagination, entry selector, or search controls, all while linking them to the table's internal logic.
+
+`usePagination`
+
+This hook gives you the necessary information to create your own pagination system. It must be used inside the `<Table>` component.
+
+```ts
+const { totalItems, itemsPerPage, currentPage, setCurrentPage } = usePagination()
+```
+
+| Property        | Type                          | Description                                                            |
+| :-------------- | :---------------------------- | :--------------------------------------------------------------------- |
+| totalItems      | number                        | The total number of items in the table (after filtering and searching) |
+| itemsPerPage    | number                        | The number of items displayed per page                                 |
+| currentPage     | number                        | The current page number                                                |
+| setCurrentPage  | (currentPage: number) => void | A function to change the active page                                   |
+
+`useToolbar`
+
+This hook provides the functions needed to connect your own entries selector or search bar. It must be used inside the `<Table>` component.
+
+```ts
+const { handleSearchBar, handleEntriesSelector } = useToolbar()
+```
+
+| Property               | Type                      | Description                                                                                                          |
+| :--------------------- | :-------------------------| :------------------------------------------------------------------------------------------------------------------- |
+| handleSearchBar        | (value: string) => void   | A function to filter the table rows based on a search value                                                          |
+| handleEntriesSelector  | (value: number>) => void  | A function to update the number of items displayed per page. The new number of entries is passed directly as a value |
+
+
+## Data handling
+
+To ensure unique row identification, the first property of the data object must be the id.
+
+This first value is not displayed in the table itself. Its sole purpose is to serve as an internal key for the library to target each row. To make the identifier visible in your table, you simply need to define an ID column using the columns prop.
+
+For example, in the dataset below, the first value is id, but it will not appear in the rendered table.
+
+```tsx
+const data: User[] = [
+  { id: 1, name: 'Alice Dupont', email: 'alice@example.com' },
+  { id: 2, name: 'Bob Martin', email: 'bob@example.com' },
+  { id: 3, name: 'Charlie Dubois', email: 'charlie@example.com' }
+]
+```
+
+To make the ID visible, just add it to your column definitions:
+
+```tsx
+const columns: Column<User>[] = [
+  { id: 'id', name: 'ID' }, // The ID is now visible
+  { id: 'name', name: 'Name' },
+  { id: 'email', name: 'Email' }
+]
+```
 
 
 ## Example
@@ -116,19 +179,18 @@ type User = {
   email: string
 }
 
-const columns = [
-  { name: 'ID', id: 'id', alignment: 'left' },
-  { name: 'Name', id: 'name', alignment: 'left' },
-  { name: 'Email', id: 'email', alignment: 'left' }
-]
-
 const data: User[] = [
   { id: 1, name: 'Alice Dupont', email: 'alice@example.com' },
   { id: 2, name: 'Bob Martin', email: 'bob@example.com' },
   { id: 3, name: 'Charlie Dubois', email: 'charlie@example.com' }
 ]
 
-const rowActions = [
+const columns: Column<User>[] = [
+  { id: 'name', name: 'Name', alignment: 'left' },
+  { id: 'email', name: 'Email', alignment: 'center' }
+]
+
+const rowActions: RowAction<User>[] = [
   {
     scope: 'row',
     placement: 'end',

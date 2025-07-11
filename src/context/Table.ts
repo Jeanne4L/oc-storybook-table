@@ -1,4 +1,4 @@
-import { ChangeEvent, createContext, useContext } from "react"
+import { createContext, useContext } from "react"
 
 import { SortConfigType, ThemeColors } from "../parts/Table/types"
 import { Column, RowAction } from "../types"
@@ -12,7 +12,7 @@ type Pagination = {
 
 type Toolbar = {
   entriesSelectOptions: number[]
-  handleSelectOption: (event: ChangeEvent<HTMLSelectElement>) => void
+  handleSelectOption: (value: number) => void
   handleInputChange: (value: string) => void
 }
 
@@ -38,7 +38,8 @@ export const TableContext = createContext<TableContextType<any>>({
     textColor: '',
     accentColor: '',
     headerBg: '',
-    rowBg: ''
+    rowBg: '',
+    borderColor: ''
   },
   rowActions: undefined,
   totalItems: 0,
