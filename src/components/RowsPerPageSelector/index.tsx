@@ -3,7 +3,7 @@ import { useToolbar } from "../../context/Toolbar"
 import { EntriesSelectContainer } from "./styles"
 
 const RowsPerPageSelector = () => {
-  const { colors, entriesSelectOptions: options, handleSelectOption,  } = useTable()
+  const { colors, entriesSelectOptions: options, handleSelectOption } = useTable()
   const { isInsideToolbar } = useToolbar()
 
   if (!isInsideToolbar) {
@@ -19,7 +19,7 @@ const RowsPerPageSelector = () => {
         name="entries" 
         id="entries" 
         data-testid="entries-selector"
-        onChange={(event) => handleSelectOption(event)}
+        onChange={(event) => handleSelectOption(Number(event.target.value))}
       >
         {sortedOptions.map((option) => (
           <option value={option} key={option}>{option}</option>

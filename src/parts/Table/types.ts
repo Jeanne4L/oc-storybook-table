@@ -8,4 +8,5 @@ export type ThemeColors = {
   accentColor: string
   headerBg: string
   rowBg: string
+  borderColor: string
 }

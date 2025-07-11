@@ -7,7 +7,7 @@ import { ScrollContainer, TableContainer } from "./styles"
 const value = { isInsideContent: true }
 
 const TableContent: React.FC<PropsWithChildren> = ({ children }) => {
-  const { isInsideTable } = useTable()
+  const { isInsideTable, colors } = useTable()
 
   if(!isInsideTable) {
     throw new Error('Table.Content must be inside Table')
@@ -16,7 +16,7 @@ const TableContent: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <ContentContext.Provider value={value}>
       <ScrollContainer>
-        <TableContainer>
+        <TableContainer borderColor={colors.borderColor}>
           {children}
         </TableContainer>
       </ScrollContainer>

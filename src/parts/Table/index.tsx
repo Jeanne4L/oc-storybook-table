@@ -21,6 +21,7 @@ export type TableProps<T extends Record<string | number, any>> = {
   rowBg?: string
   accentColor?: string
   textColor?: string
+  borderColor?: string
   rowActions?: RowAction<T>[]
 }
 
@@ -42,6 +43,7 @@ const TableComponent = <T extends Record<string, any>>({
   headerBg = '#DAE0E7',
   rowBg = '#F3F5F7',
   accentColor = '#4E80B2',
+  borderColor = '#C1CBD7',
   rowActions,
   children
 }: TableProps<T>) => {
@@ -57,8 +59,8 @@ const TableComponent = <T extends Record<string, any>>({
     setFilteredData(data)
   }, [data])
   
-  const handleSelectOption = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setItemsPerPage(Number(event.target.value))
+  const handleSelectOption = (value: number) => {
+    setItemsPerPage(value)
   }
 
   const handleInputChange = (inputValue: string) => {
@@ -112,7 +114,7 @@ const TableComponent = <T extends Record<string, any>>({
   const lastIndex = firstIndex + itemsPerPage
 
   const visibleRowsIndexes = { firstIndex, lastIndex }
-  const colors = { textColor, headerBg, rowBg, accentColor }
+  const colors = { textColor, headerBg, rowBg, accentColor, borderColor }
 
   const contextValue = {
     columns,
