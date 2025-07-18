@@ -28,7 +28,7 @@ export type TableContextType<T extends Record<string | number, any>> =
     lastIndex: number
   }
   isInsideTable: boolean
-  handleSort: (columnIndex: number, sortConfig: SortConfigType, data: T[]) => void
+  handleSort: (columnId: string, sortConfig: SortConfigType, data: T[]) => void
 }
 
 export const TableContext = createContext<TableContextType<any>>({
@@ -46,7 +46,7 @@ export const TableContext = createContext<TableContextType<any>>({
   itemsPerPage: 0,
   currentPage: 0,
   sortConfig: {
-    columnIndex: 0, 
+    columnId: null, 
     direction: 'asc'
   },
   indexes: {

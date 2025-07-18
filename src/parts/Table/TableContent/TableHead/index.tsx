@@ -34,19 +34,19 @@ const TableHead = () => {
       <TableHeaderRow headerBg={colors.headerBg} data-testid="table-header">
         {renderActions('beginning')}
 
-        {columns.map((column, index) => (
+        {columns.map((column) => (
           <TableHeaderCell 
             key={column.id} 
             data-testid="sort-button"
-            onClick={() => handleSort(index, sortConfig, data)}
+            onClick={() => handleSort(column.id, sortConfig, data)}
             alignment={column.alignment ?? 'left'} 
           >
             <div>
               {column.name}
               <SortIcon 
-                bottomActive={sortConfig.columnIndex === index && isDescSorting} 
-                topActive={sortConfig.columnIndex === index && isAscSorting} 
-                disabled={sortConfig.columnIndex !== index}
+                bottomActive={sortConfig.columnId === column.id && isDescSorting} 
+                topActive={sortConfig.columnId === column.id && isAscSorting} 
+                disabled={sortConfig.columnId !== column.id}
                 color={colors.textColor}
               />
             </div>

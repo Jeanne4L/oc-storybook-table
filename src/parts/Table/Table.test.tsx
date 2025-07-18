@@ -128,7 +128,7 @@ describe('Table', () => {
 
     // SORT BY DATE
     const getStringDate = (date: string) => {
-      return new Date(date).toISOString()
+      return new Date(date).toISOString().split('T')[0]
     }
 
     fireEvent.click(sortButtons[3])
@@ -145,13 +145,13 @@ describe('Table', () => {
       'beginning', 
       'first', 
       beginningGlobalActions, 
-      ['🗑️', 'John', 'Smith', '500', new Date('2000-03-18').toISOString()]
+      ['🗑️', 'John', 'Smith', '500', new Date('2000-03-18').toISOString().split('T')[0]]
     ],
     [
       'end', 
       'last', 
       endRowActions, 
-      ['John', 'Smith', '500', new Date('2000-03-18').toISOString(), '✅']
+      ['John', 'Smith', '500', new Date('2000-03-18').toISOString().split('T')[0], '✅']
     ]
   ])('"%s" actions are placed %s', (type, placement, rowActions, expected) => {
     render(renderTable({ rowActions }))

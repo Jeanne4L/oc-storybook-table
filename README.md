@@ -20,10 +20,10 @@ OCTable uses the compound component pattern. You compose your table using the pr
 ### Available Components
 
 - `<Table>`: root container (**required**)
-- `<Table.Content>`: wraps `<Table.Head>` and `<Table.Body>` (**required** if any of them is used)
+- `<Table.Content>`: wraps `<Table.Head>` and `<Table.Body>` (**required** if you're using `<Table.Head>` or `<Table.Body>`)
 - `<Table.Head>`: renders the header row (**optional**)
 - `<Table.Body>`: renders table rows (**optional**)
-- `<Table.Toolbar>`: wraps `<Table.EntriesSelector>` and `<Table.SearchBar>` (**required** if any of them is used)
+- `<Table.Toolbar>`: wraps `<Table.EntriesSelector>` and `<Table.SearchBar>` (**required** if you're using `<Table.EntriesSelector>` or `<Table.SearchBar>`)
 - `<Table.EntriesSelector>`: dropdown to choose number of entries per page (**optional**)
 - `<Table.SearchBar>`: input to filter rows by keyword (**optional**)
 - `<Table.Pagination>`: page navigation component (**optional**)
@@ -37,9 +37,9 @@ OCTable uses the compound component pattern. You compose your table using the pr
 
 Defines the structure of a column in the table.
 
-```ts
+```ts 
 type Column<T extends Record<string | number, any>> = {
-  id: Extract<keyof T, string | number>
+  id: Extract<keyof T, string>
   name: string
   alignment?: "left" | "right" | "center"
 }
@@ -47,7 +47,7 @@ type Column<T extends Record<string | number, any>> = {
 
 | Property   | Type                                | Required        | Description                                       |
 | :--------- | :---------------------------------- | :-------------- | :------------------------------------------------ |
-| id         | Extract<keyof T, string \| number>  | Yes             | Key used to extract the value from the row object |
+| id         | Extract<keyof T, string>            | Yes             | Key used to extract the value from the row object |
 | name       | string                              | Yes             | Label displayed in the table header               |
 | alignment  | "left" \| "right" \| "center"       | No              | Text alignment inside the column                  |
 
@@ -145,28 +145,19 @@ const { handleSearchBar, handleEntriesSelector } = useToolbar()
 
 ## Data handling
 
-To ensure unique row identification, the first property of the data object must be the id.
-
-This first value is not displayed in the table itself. Its sole purpose is to serve as an internal key for the library to target each row. To make the identifier visible in your table, you simply need to define an ID column using the columns prop.
-
-For example, in the dataset below, the first value is id, but it will not appear in the rendered table.
+To display data in OCTable, you provide an array of objects (`data`) and define your table's structure with `Column` definitions. Each `Column`'s `id` property must match a key in your data objects to display that value. Any keys in your data that don't have a corresponding `Column` `id` will be ignored.
 
 ```tsx
 const data: User[] = [
-  { id: 1, name: 'Alice Dupont', email: 'alice@example.com' },
-  { id: 2, name: 'Bob Martin', email: 'bob@example.com' },
-  { id: 3, name: 'Charlie Dubois', email: 'charlie@example.com' }
+  { name: 'Alice Dupont', email: 'alice@example.com', userId: 1 },
+  // ... other users
 ]
-```
 
-To make the ID visible, just add it to your column definitions:
-
-```tsx
 const columns: Column<User>[] = [
-  { id: 'id', name: 'ID' }, // The ID is now visible
   { id: 'name', name: 'Name' },
   { id: 'email', name: 'Email' }
 ]
+// 'name' and 'email' will be displayed. 'userId' is ignored as there's no matching column.
 ```
 
 

@@ -132,6 +132,6 @@ export const TableWithTools: StoryObj<typeof meta> = {
     accentColor,
     columns,
     data,
-    entriesSelectOptions: [1, 5]
+    entriesSelectOptions: [1, 4]
   }
 }

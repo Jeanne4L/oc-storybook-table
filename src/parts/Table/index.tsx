@@ -51,7 +51,7 @@ const TableComponent = <T extends Record<string, any>>({
   const [itemsPerPage, setItemsPerPage] = useState<number>(entriesSelectOptions[0])
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [sortConfig, setSortConfig] = useState<SortConfigType>({
-    columnIndex: null,
+    columnId: null,
     direction: 'desc',
   })
 
@@ -72,17 +72,17 @@ const TableComponent = <T extends Record<string, any>>({
     setFilteredData(correspondingData)
   }
 
-  const handleSort = (columnIndex: number, sortConfig: SortConfigType, data: T[]) => {
-    const isSameColumn = sortConfig.columnIndex === columnIndex
+  const handleSort = (columnId: string, sortConfig: SortConfigType, data: T[]) => {
+    const isSameColumn = sortConfig.columnId === columnId
 
     const newSortConfig: SortConfigType = {
-      columnIndex,
+      columnId,
       direction: isSameColumn && sortConfig.direction === 'asc' ? 'desc' : 'asc'
     }
 
     const sortedData = [...data].sort((a, b) => {
-      const aValue = Object.values(a)[columnIndex + 1]
-      const bValue = Object.values(b)[columnIndex + 1]
+      const aValue = a[columnId]
+      const bValue = b[columnId]
 
       const aNum = Number(aValue)
       const bNum = Number(bValue)
