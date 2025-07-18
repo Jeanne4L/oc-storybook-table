@@ -1,6 +1,6 @@
 {
   "name": "octable",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "OCTable is a compound React component library for rendering customizable data tables",
   "type": "module",
   "main": "dist/index.js",

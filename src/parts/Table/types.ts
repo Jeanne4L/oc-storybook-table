@@ -1,5 +1,5 @@
 export type SortConfigType = {
-  columnIndex: number | null
+  columnId: string | null
   direction: 'asc' | 'desc'
 }
 

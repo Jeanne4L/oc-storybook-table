@@ -2,7 +2,7 @@ import { ReactNode } from "react"
 
 export type Column<T extends Record<string | number, any>> = { 
   name: string
-  id: Extract<keyof T, string | number>
+  id: Extract<keyof T, string>
   alignment?: "left" | "right" | "center"
 }
 
