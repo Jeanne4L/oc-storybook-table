@@ -61,6 +61,7 @@ const TableComponent = <T extends Record<string, any>>({
   
   const handleSelectOption = (value: number) => {
     setItemsPerPage(value)
+    setCurrentPage(1)
   }
 
   const handleInputChange = (inputValue: string) => {
