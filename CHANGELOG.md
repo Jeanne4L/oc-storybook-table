@@ -1,8 +1,20 @@
 # Changelog
 
+## 0.0.4 - 2025-09-05
+
+### Fixed
+- Correct `package.json` exports to properly expose type definitions (#33)
+
+
 ## 0.0.3 - 2025-07-19
 
 ### Fixed
 
-- Fix data sort function (#26)
 - Prevent table from becoming empty after changing items per page by resetting current page to 1 (#30)
+
+
+## 0.0.2 - 2025-07-18
+
+### Fixed
+
+- Fix data sort function (#26)

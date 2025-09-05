@@ -72,7 +72,7 @@ describe('Table', () => {
     expect(rows.length).toEqual(5)
   })
 
-  test('searching filters not corresponding data', () => {
+  test('searching filters data', () => {
     render(renderTable({}))
 
     const searchBar = screen.getByTestId('search-bar')
