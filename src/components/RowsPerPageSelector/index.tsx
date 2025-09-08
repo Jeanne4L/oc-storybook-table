@@ -25,7 +25,7 @@ const RowsPerPageSelector = () => {
           <option value={option} key={option}>{option}</option>
         ))}
       </select>
-      <span>entries</span>
+      <label htmlFor="entries">entries</label>
     </EntriesSelectContainer>
   )
 }
