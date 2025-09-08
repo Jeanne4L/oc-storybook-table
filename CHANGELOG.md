@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.0.6 - 2025-09-08
+
+### Fixed
+
+- Make toolbar responsive (#37)
+
+
 ## 0.0.5 - 2025-09-08
 
 ### Fixed
