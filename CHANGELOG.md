@@ -1,8 +1,16 @@
 # Changelog
 
+## 0.0.5 - 2025-09-08
+
+### Fixed
+
+- Add label to search input (#35)
+
+
 ## 0.0.4 - 2025-09-05
 
 ### Fixed
+
 - Correct `package.json` exports to properly expose type definitions (#33)
 
 
