@@ -19,6 +19,7 @@ const SearchBar = () => {
       <input 
         type="text" 
         data-testid="search-bar"
+        aria-label="Search"
         onChange={
           (event: ChangeEvent<HTMLInputElement>) => handleInputChange(event.target.value)
         }
